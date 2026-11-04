@@ -1,0 +1,33 @@
+# 开发者档案字段（开源开发者 sourcing）
+
+repo:
+  full_name: ""
+  url: ""
+  created_at: ""
+  stars: 0
+  stars_checked_at: ""
+  overview_50: ""            # 题目要求的项目概述（≤50 字）
+  innovative: true           # 排除教程、汇总、镜像等
+
+developer:
+  login: ""
+  name_cn: ""
+  name_en: ""
+  profile_200: ""            # 题目要求的 profile（≤200 字）：教育 + 职业 + 成就
+  primary_dev_basis: ""      # 提交占比 / 仓库所有者 / 论文一作
+  chinese_basis: ""          # 姓名 / 学校 / 所在地 / 机构公示
+
+age:
+  birth_year: ""
+  cohort: ""                 # 90后 / 95后 / 00后
+  evidence: ""               # 例：本人简历写明 2017.08 入学
+  evidence_level: ""         # confirmed_self | confirmed_media | confirmed_institution | inferred | unknown
+  sources: []
+
+founder_signals:
+  prior_startups: []
+  stealth: false
+  notable_projects: []
+  already_discovered: false  # 已是头部 KOL 或已获大额融资
+
+as_of: ""

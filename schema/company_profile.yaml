@@ -1,0 +1,60 @@
+# 公司档案字段（融资项目 sourcing）
+# source_level: registry | company | media | estimate | todo
+# claim_type:   vendor | independent
+
+basic:
+  name_cn: ""
+  name_en: ""
+  legal_entities:            # 多主体时逐个列出
+    - name: ""
+      jurisdiction: ""       # CN / US-DE / FR / HK ...
+      registry_id: ""        # 统一社会信用代码 / CIK / SIREN
+      founded: ""            # YYYY-MM-DD
+      registered_capital: ""
+      role: ""               # 控股 / 运营 / 早期主体
+  website: ""                # 查不到就写"未检索到"
+  hq: ""
+  subsector: ""              # 例：生物数据 / 实验自动化 / 虚拟细胞 / 材料
+
+business:
+  one_liner: ""
+  mission_story: ""          # 想讲的故事
+  tech_route: ""
+  product_form: ""
+  business_model: ""         # 软件授权 / 研发服务 / 自研资产 / 卖数据 / 容量租用
+  milestones: []             # {date, event, source_level}
+
+ai4s:                         # 为什么属于 AI for Science
+  research_stage: []         # 假设生成 | 分子/材料/蛋白设计 | 性质预测与虚拟筛选 | 科学模拟 | 实验规划与决策 | 自动化/自主实验室 | 科学数据生产
+  what_ai_does: ""           # 用什么模型，替代了原流程中的哪一步
+  ai_depth: ""               # native | enabled
+  wet_dry_loop: false
+
+funding:
+  current_round:
+    round: ""
+    amount_claimed: ""       # 对外宣称
+    amount_registered: ""    # 登记口径，例如 SEC Form D 的已售金额
+    lead: []
+    others: []
+    disclosed_date: ""       # 公开披露日
+    registered_date: ""      # 监管/工商登记日（交割）
+    use_of_funds: ""
+  history: []                # {date, round, amount, investors, source_level}
+  total_raised: ""
+  valuation_estimate: ""     # 写出算式
+  investor_profile: ""       # 美元 VC / 人民币 VC / 产业资本 / 国资 / 保险资金 / 天使
+
+team:
+  members: []                # {name, role, education, career, highlights, is_registered_officer}
+  size: ""                   # 参保人数 / 员工规模及年份
+  founder_market_fit: ""
+
+judgement:
+  thesis_position: ""        # 对应论点中的哪个位置
+  watch: ""                  # 值得关注（硬信号）
+  verify: ""                 # 待验证（可以查证的问题）
+  comparables: { cn: "", global: "" }
+
+sources: []                  # {url, date, source_level, claim_type}
+as_of: ""

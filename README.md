@@ -1,0 +1,69 @@
+# sourcing-agent
+
+**一个"先有判断、再找人"的 AI 辅助早期投资 sourcing 工作流。**
+
+在公开信息里系统性地找到还没被市场发现的项目和创业者，用统一字段沉淀下来，并且每条信息都能追溯到来源。它最早用于一次 VC 笔试（近 30 天 AI for Science 融资项目 + GitHub 华人开发者），整理之后可以每周复用。
+
+```mermaid
+flowchart LR
+  T[0 定判断<br/>语料精读 → 可证伪的论点] --> D[1 发现<br/>多信源扩池]
+  D --> F[2 过滤<br/>规则 + LLM 是/否判断]
+  F --> L[3 定位<br/>主体 / 主要开发者]
+  L --> E[4 补全<br/>报道 + 官方登记]
+  E --> J[5 评估<br/>人来判断]
+  J --> O[6 输出<br/>结构化表格，标来源等级]
+  O -. 漏斗与反例 .-> T
+```
+
+## 为什么这样设计
+
+| 原则 | 做法 |
+|---|---|
+| 先定判断，再选项目 | 第 0 步先读 20–30 篇近期材料，写出带"反证条件"的论点，再按论点在产业链上的位置去找项目，避免只复述融资新闻 |
+| LLM 只做判断，不做生成 | 让模型回答"是不是 AI4S""是不是教程仓库"这类是/否问题；事实一律来自检索结果 |
+| 每个数字都可追溯 | 来源分五级：`登记` / `公司` / `媒体` / `推算` / `待查`；人物年龄分 `证实` / `推断` / `未知` |
+| 媒体口径和登记口径分开 | 融资同时记"公开披露日"和"监管/工商登记日"；对外宣称的金额和实际登记的金额分列 |
+| 人在关键节点把关 | 论点设定、最终入选、年龄判定由人来做；机器负责扩大候选池和做重复劳动 |
+
+## 目录
+
+| 路径 | 内容 |
+|---|---|
+| [`AGENT.md`](AGENT.md) | 给 agent 的总指令：角色、六步流程、硬规则、交付标准 |
+| [`playbooks/`](playbooks/) | 三类任务的操作手册：定判断、融资项目 sourcing、开源开发者 sourcing |
+| [`schema/`](schema/) | 公司档案与开发者档案的字段定义（YAML） |
+| [`channels/channels.md`](channels/channels.md) | 渠道表：怎么抓、产出多少、怎么失败 |
+| [`channels/registry_checklist.md`](channels/registry_checklist.md) | 中、美、法、英、港的官方登记核查清单 |
+| [`scripts/`](scripts/) | GitHub 发现与筛选脚本、抓取质量检查脚本 |
+| [`templates/`](templates/) | 两类交付表格的模板 |
+| [`runs/2026-11/`](runs/2026-11/) | 首次运行的漏斗与复盘（不含个人信息） |
+
+## 快速开始
+
+```bash
+# 依赖：已登录的 GitHub CLI（gh auth login）、Python 3.9+
+cd scripts
+python3 github_discover.py --since 2026-08-04 --until 2026-11-04 --min-stars 1000 --out out/
+python3 github_screen.py            # 读 out/raw_repos.json，输出漏斗与华人候选
+python3 quality_checks.py page.txt --title-keyword PaperBenchX   # 检查抓取的正文是否被污染
+```
+
+在支持工具调用的 agent（如 Claude）里使用时，把 `AGENT.md` 作为系统指令，再按任务类型附上对应的 playbook。
+
+## 首次运行的结果（2026-11）
+
+- **融资项目**：两路检索汇总约 20 笔 → 候选 8 → 入选 5，链条为造数据 → 做实验 → 自产数据训模型 → 材料闭环 → 闭环平台
+- **GitHub 开发者**：780 → 666 → 198 → 19 → 6 → 3
+- **口径发现**，详见 [`runs/2026-11/retro.md`](runs/2026-11/retro.md)：
+  - 披露日不等于交割日，最长相差两个多月
+  - 注册资本推不出融资额
+  - 厂商自报的数字基本没有独立复核
+  - 同一篇 PR 常被多家媒体转载
+
+## 下一步
+
+- [ ] 渠道按月归档落盘，解决 RSS 只返回最近 N 条的问题
+- [ ] 同题异源聚类，避免把 PR 转载量当成热度
+- [ ] 把 `claim_type: vendor / independent` 写进元数据
+- [ ] 接入 arXiv、Hugging Face、Product Hunt 作为人物信号源
+- [ ] 每周定时运行，输出"本周值得见的 5 个人"
