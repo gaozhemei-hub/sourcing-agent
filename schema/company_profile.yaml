@@ -21,8 +21,18 @@ business:
   mission_story: ""          # 想讲的故事
   tech_route: ""
   product_form: ""
-  business_model: ""         # 软件授权 / 研发服务 / 自研资产 / 卖数据 / 容量租用
-  milestones: []             # {date, event, source_level}
+  business_model: ""         # 一句话：收入来源
+  revenue_cycle: ""          # 回款周期，推断时标注
+  business_model_detail:
+    product_service: ""
+    target_customers: ""
+    pricing: ""              # 未披露就写未披露
+    retention: ""
+    asset_structure: ""      # 轻 / 中 / 重资产与单位经济
+    scaling_constraint: ""
+  milestones:
+    tech: []                 # {date, event, source_level}
+    commercial: []           # 客户、订单、授权、营收或盈利时间表；没有就写未披露
 
 ai4s:                         # 为什么属于 AI for Science
   research_stage: []         # 假设生成 | 分子/材料/蛋白设计 | 性质预测与虚拟筛选 | 科学模拟 | 实验规划与决策 | 自动化/自主实验室 | 科学数据生产
@@ -35,8 +45,9 @@ funding:
     round: ""
     amount_claimed: ""       # 对外宣称
     amount_registered: ""    # 登记口径，例如 SEC Form D 的已售金额
-    lead: []
+    lead: []                 # 品牌名写全
     others: []
+    fa: ""                   # 财务顾问；Form D 佣金为 0 时可写"无"
     disclosed_date: ""       # 公开披露日
     registered_date: ""      # 监管/工商登记日（交割）
     use_of_funds: ""
@@ -47,14 +58,35 @@ funding:
 
 team:
   members: []                # {name, role, education, career, highlights, is_registered_officer}
-  size: ""                   # 参保人数 / 员工规模及年份
+  size: ""                   # 参保人数 / 员工规模及年份（放团队画像，不放履历列）
   founder_market_fit: ""
+  profile:
+    founding_pattern: ""     # 一两句白话，不用抽象标签
+    control_and_roles: ""
+    engineering: ""
+    wet_lab: ""
+    fulltime_binding: ""
+    risk: ""
+
+equity:
+  shareholders: []           # {legal_name, pct}，用法定全称
+  actual_controller: ""
+  beneficial_owners: []      # {name, pct}
+  notes: ""                  # 境外控股、股东名册不公开等
+
+competition:
+  chain_position: ""         # 上游 / 中游 / 下游 + 环节
+  upstream_downstream: ""
+  competitors: []            # {name, country, stage, note}
+  strengths: ""
+  weaknesses: ""
+  moat: ""
 
 judgement:
   thesis_position: ""        # 对应论点中的哪个位置
   watch: ""                  # 值得关注（硬信号）
   verify: ""                 # 待验证（可以查证的问题）
-  comparables: { cn: "", global: "" }
+
 
 sources: []                  # {url, date, source_level, claim_type}
 as_of: ""
